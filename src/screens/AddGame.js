@@ -1,10 +1,10 @@
-import { Text, TextInput, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { styles } from "../components/styles";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../components/firebaseConfig';
-import { Button } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Button, Input } from '@rneui/themed';
 import Game from "./Game";
 
 const Stack = createStackNavigator();
@@ -27,30 +27,38 @@ function AddGameStack({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {loggedIn ? (
-        <>
-          <TextInput
-            style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginBottom: 7 }}
-            onChangeText={(text) => setOpponent(text)}
-            value={opponent}
-            placeholder="Opponent"
-          />
-          <TextInput
-            style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginBottom: 7 }}
-            onChangeText={(text) => setCourt(text)}
-            value={court}
-            placeholder="Court"
-          />
-          <Button
-            title='Start game'
-            onPress={() => navigation.navigate('Game')}
-          />
-        </>
-      ) : (
+      {/*
+        {loggedIn ? (
+
+          ) : (
         <>
           <Text>Please log in first</Text>
         </>
       )}
+      */}
+
+      <>
+        <Input
+          onChangeText={(text) => setOpponent(text)}
+          value={opponent}
+          placeholder="Opponent"
+        />
+        <Input
+          onChangeText={(text) => setCourt(text)}
+          value={court}
+          placeholder="Court"
+        />
+        <Button
+          title='Start game'
+          onPress={() => {
+            navigation.navigate('Game', {
+              opponent: opponent,
+              court: court
+            });
+          }}
+        />
+      </>
+
     </View>
   );
 }

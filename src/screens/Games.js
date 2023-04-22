@@ -1,26 +1,49 @@
-import { Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { styles } from "../components/styles";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../components/firebaseConfig';
+import { getDatabase, onValue, ref } from "firebase/database";
 
 export default function Games() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
+  const [games, setGames] = useState([]);
+  const currentUser = auth.currentUser;
 
   useEffect(() => {
-    const subscriber = onAuthStateChanged(auth, (user) => {
-      console.log('user', JSON.stringify(user));
-      setUser(user);
-      if (user) { setLoggedIn(true) } else { setLoggedIn(false) }
+    const db = getDatabase();
+    const gamesRef = ref(db, `users/${currentUser.uid}/games`);
+    const unsubscribe = onValue(gamesRef, (snapshot) => {
+      const data = snapshot.val();
+      const list = Object.keys(data).map((key) => ({
+        id: key,
+        ...data[key]
+      }));
+      setGames(list);
     });
-    return subscriber;
+    return () => unsubscribe();
   }, []);
 
   return (
     <View style={styles.container}>
-      {loggedIn ? (
-        <Text>hyvä peli :D</Text>
+      {currentUser ? (
+        <>
+          <FlatList
+            data={games}
+            renderItem={({ item }) => (
+              <View style={styles.gameInfo}>
+                <Text>{item.date}</Text>
+                <Text>Game at {item.court} against {item.opponent}</Text>
+                <Text>{item.sets.user} - {item.sets.opponent}</Text>
+                <Text>({item.firstSet.user} - {item.firstSet.opponent}), ({item.secondSet.user} - {item.secondSet.opponent}), ({item.thirdSet.user} - {item.thirdSet.opponent})</Text>
+                {item.userWon
+                  ? <Text style={{ color: 'limegreen' }}>You won!</Text>
+                  : <Text style={{ color: 'red' }}>You lost!</Text>
+                }
+              </View>
+            )}
+            keyExtractor={(item) => item.date}
+          />
+        </>
       ) : (
         <>
           <Text>Please log in first</Text>
@@ -29,3 +52,4 @@ export default function Games() {
     </View>
   );
 }
+

@@ -1,8 +1,9 @@
-import { View, Text, Button, TextInput, Alert } from "react-native";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { View, Alert, Text } from "react-native";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "./firebaseConfig";
 import { styles } from "./styles";
+import { Input, Button } from '@rneui/themed';
 
 export default function Signup({ navigation }) {
   const [username, setUsername] = useState('')
@@ -17,11 +18,10 @@ export default function Signup({ navigation }) {
         let res = await createUserWithEmailAndPassword(auth, email, password);
         if (res && res.user) {
           Alert.alert("Creating user successfull.");
-          await signInWithEmailAndPassword(auth, email, password); // Sign in the user to get the updated currentUser object
           updateProfile(auth.currentUser, {
             displayName: username
           }).then(() => {
-            navigation.replace("Login");
+            navigation.navigate("HomeStack");
           }).catch((e) => {
             console.log(e);
           })
@@ -36,54 +36,49 @@ export default function Signup({ navigation }) {
   };
 
   return (
-    <View style={styles.outer}>
-      <View style={styles.inner}>
-        <Text style={styles.header}>Signup</Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>Signup</Text>
 
-        {error && <Text style={styles.error}>{error}</Text>}
+      {error && <Text style={styles.error}>{error}</Text>}
 
-        <TextInput
-          value={username}
-          onChangeText={setUsername}
-          placeholder="Enter username"
-          autoCapitalize="none"
-          placeholderTextColor="#aaa"
-          style={styles.input}
-        />
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          placeholder="Enter email address"
-          autoCapitalize="none"
-          placeholderTextColor="#aaa"
-          style={styles.input}
-        />
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          placeholder="Enter password"
-          autoCapitalize="none"
-          placeholderTextColor="#aaa"
-          style={styles.input}
-        />
-        <TextInput
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-          placeholder="Confirm password"
-          autoCapitalize="none"
-          placeholderTextColor="#aaa"
-          style={styles.input}
-        />
+      <Input
+        value={username}
+        onChangeText={setUsername}
+        placeholder="Enter username"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
+      <Input
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        placeholder="Enter email address"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
+      <Input
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        placeholder="Enter password"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
+      <Input
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry
+        placeholder="Confirm password"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
 
-        <Button
-          title="Create Account"
-          onPress={createAccount}
-          disabled={!username || !email || !password || !confirmPassword}
-        />
-      </View>
+      />
+
+      <Button
+        title="Create Account"
+        onPress={createAccount}
+        disabled={!username || !email || !password || !confirmPassword}
+      />
     </View>
   );
 }

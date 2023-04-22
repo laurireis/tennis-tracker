@@ -12,14 +12,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'red'
   },
-  outer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inner: {
-    width: 240,
-  },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -37,4 +29,19 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     color: 'red',
   },
+  player: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  gameInfo: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  manageGame: {
+    flexDirection: 'row',
+  }
 })

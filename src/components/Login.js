@@ -1,8 +1,9 @@
-import { View, Text, Button, TextInput, StyleSheet, Alert } from "react-native";
+import { View, Alert, Text } from "react-native";
 import { useState } from "react";
 import { auth } from "./firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { styles } from "./styles";
+import { Input, Button } from '@rneui/themed';
 
 
 export default function Login({ navigation }) {
@@ -27,32 +28,28 @@ export default function Login({ navigation }) {
   };
 
   return (
-    <View style={styles.outer}>
-      <View style={styles.inner}>
-        <Text style={styles.header}>Login</Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>Login</Text>
 
-        {error && <Text style={styles.error}>{error}</Text>}
+      {error && <Text style={styles.error}>{error}</Text>}
 
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          placeholder="Enter email address"
-          autoCapitalize="none"
-          placeholderTextColor="#aaa"
-          style={styles.input}
-        />
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          placeholder="Enter password"
-          autoCapitalize="none"
-          placeholderTextColor="#aaa"
-          style={styles.input}
-        />
-        <Button title="Login" onPress={loginUser} disabled={!email || !password} />
-      </View>
+      <Input
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        placeholder="Enter email address"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
+      <Input
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        placeholder="Enter password"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
+      <Button title="Login" onPress={loginUser} disabled={!email || !password} />
     </View>
   );
 }

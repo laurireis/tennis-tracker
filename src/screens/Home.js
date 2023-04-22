@@ -1,9 +1,11 @@
-import { Button, Text, View } from "react-native";
+import { View, Text } from "react-native";
 import { styles } from "../components/styles";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../components/firebaseConfig';
+import { Button } from '@rneui/themed';
+
 import LoggedIn from "../components/LoggedIn";
 import Login from "../components/Login";
 import Signup from "../components/SignUp";
