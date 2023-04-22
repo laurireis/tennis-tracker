@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   logo: {
     fontSize: 55,
     fontWeight: 'bold',
-    color: 'red'
+    color: '#fa5aca'
   },
   header: {
     fontSize: 24,
@@ -43,5 +43,19 @@ export const styles = StyleSheet.create({
   },
   manageGame: {
     flexDirection: 'row',
+  },
+  button: {
+    backgroundColor: '#4d048d',
+    margin: 4,
+    borderRadius: 4,
+  },
+  playedGame: {
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 8,
+    marginVertical: 4,
+    width: '100%',
   }
 })

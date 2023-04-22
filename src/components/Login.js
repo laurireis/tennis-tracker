@@ -14,7 +14,7 @@ export default function Login({ navigation }) {
   const loginUser = async () => {
     try {
       let res = await signInWithEmailAndPassword(auth, email, password);
-      if (res && res.user) { Alert.alert("Login successfull") }
+      if (res && res.user) { Alert.alert("Login successful") }
       navigation.navigate("HomeStack");
     } catch (error) {
       if (error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password') {
@@ -49,7 +49,7 @@ export default function Login({ navigation }) {
         autoCapitalize="none"
         placeholderTextColor="#aaa"
       />
-      <Button title="Login" onPress={loginUser} disabled={!email || !password} />
+      <Button buttonStyle={styles.button} title="Login" onPress={loginUser} disabled={!email || !password} />
     </View>
   );
 }

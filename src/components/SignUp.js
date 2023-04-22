@@ -17,7 +17,7 @@ export default function Signup({ navigation }) {
       if (password === confirmPassword) {
         let res = await createUserWithEmailAndPassword(auth, email, password);
         if (res && res.user) {
-          Alert.alert("Creating user successfull.");
+          Alert.alert("Creating user successful.");
           updateProfile(auth.currentUser, {
             displayName: username
           }).then(() => {
@@ -30,7 +30,7 @@ export default function Signup({ navigation }) {
         setError("Passwords don't match");
       }
     } catch (e) {
-      setError('Creating user unsuccessfull');
+      setError('Creating user unsuccessful');
       console.log(e);
     }
   };
@@ -75,6 +75,7 @@ export default function Signup({ navigation }) {
       />
 
       <Button
+        buttonStyle={styles.button}
         title="Create Account"
         onPress={createAccount}
         disabled={!username || !email || !password || !confirmPassword}

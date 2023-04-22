@@ -1,6 +1,8 @@
 import { signOut } from "firebase/auth";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
+import { Button } from "@rneui/themed";
 import { auth } from "./firebaseConfig";
+import { styles } from "./styles";
 
 export default function LoggedIn() {
   const logout = async () => {
@@ -13,14 +15,8 @@ export default function LoggedIn() {
   const user = auth.currentUser;
 
   return (
-    <View>{user ? (
-      <>
-        <Text>Welcome {user.displayName}!</Text>
-      </>
-    ) : (
-      <Text></Text>
-    )}
-      <Button title="Log out" onPress={logout} />
+    <View>{user ? <Text>Welcome {user.displayName}!</Text> : <></>}
+      <Button buttonStyle={styles.button} title="Log out" onPress={logout} />
     </View>
   );
 }

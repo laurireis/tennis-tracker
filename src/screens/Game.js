@@ -7,6 +7,7 @@ import { getDatabase, ref, push } from "firebase/database";
 
 export default function Game({ navigation, route }) {
   const params = route.params;
+  const currentUser = auth.currentUser;
   const [points, setPoints] = useState({ user: 0, opponent: 0 });
   const [games, setGames] = useState({ user: 0, opponent: 0 });
   const [sets, setSets] = useState({ user: 0, opponent: 0 });
@@ -16,13 +17,18 @@ export default function Game({ navigation, route }) {
   const [thirdSet, setThirdSet] = useState({ user: 0, opponent: 0 });
 
   function sendToDatabase(bool) {
-    const currentUser = auth.currentUser;
     const db = getDatabase();
     const gameRef = ref(db, `users/${currentUser.uid}/games`);
     if (bool === true) {
       sets.user += 1;
     } else {
       sets.opponent += 1;
+    }
+    if (params.opponent === '') {
+      params.opponent = 'an opponent';
+    }
+    if (params.court === '') {
+      params.court = 'a court';
     }
     push(
       gameRef,
@@ -47,14 +53,7 @@ export default function Game({ navigation, route }) {
       if (sets.user === 1 && games.user === 5 && points.user === 40) {
         sendToDatabase(true);
         Alert.alert('You won!');
-        navigation.navigate('Games', {
-          sets: ({ user: sets.user + 1, opponent: sets.opponent }),
-          firstSet: firstSet,
-          secondSet: secondSet,
-          thirdSet: thirdSet,
-          opponent: params.opponent,
-          court: params.court
-        });
+        navigation.navigate('Games');
       }
       // Finish set (needs a two point difference)
       else if (games.user >= 5 && points.user === 40 && games.user != games.opponent) {
@@ -141,7 +140,7 @@ export default function Game({ navigation, route }) {
       <Text>Game at {params.court ? <Text>{params.court}</Text> : <Text>a court</Text>}</Text>
       <View style={{ flexDirection: 'row' }}>
         <Text>Placeholder </Text>
-        <Text>User </Text>
+        <Text>{currentUser.displayName} </Text>
         {params.opponent ? <Text>{params.opponent}</Text> : <Text>Opponent</Text>}
       </View>
       <View style={{ flexDirection: 'row' }}>
@@ -160,9 +159,9 @@ export default function Game({ navigation, route }) {
         <Text>{sets.opponent}</Text>
       </View>
       <View style={{ flexDirection: 'row' }}>
-        <Button title='Undo' />
-        <Button title='<<' onPress={() => addScore('user')} />
-        <Button title='>>' onPress={() => addScore('opponent')} />
+        <Button buttonStyle={styles.button} title='Undo' />
+        <Button buttonStyle={styles.button} title='<<' onPress={() => addScore('user')} />
+        <Button buttonStyle={styles.button} title='>>' onPress={() => addScore('opponent')} />
       </View>
     </View>
   );

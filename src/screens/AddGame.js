@@ -10,9 +10,7 @@ import Game from "./Game";
 const Stack = createStackNavigator();
 
 function AddGameStack({ navigation }) {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
-
   const [opponent, setOpponent] = useState('');
   const [court, setCourt] = useState('');
 
@@ -20,45 +18,40 @@ function AddGameStack({ navigation }) {
     const subscriber = onAuthStateChanged(auth, (user) => {
       console.log('user', JSON.stringify(user));
       setUser(user);
-      if (user) { setLoggedIn(true) } else { setLoggedIn(false) }
     });
     return subscriber;
   }, []);
 
   return (
     <View style={styles.container}>
-      {/*
-        {loggedIn ? (
-
-          ) : (
+      {user ? (
+        <>
+          <Input
+            onChangeText={(text) => setOpponent(text)}
+            value={opponent}
+            placeholder="Opponent"
+          />
+          <Input
+            onChangeText={(text) => setCourt(text)}
+            value={court}
+            placeholder="Court"
+          />
+          <Button
+            buttonStyle={styles.button}
+            title='Start game'
+            onPress={() => {
+              navigation.navigate('Game', {
+                opponent: opponent,
+                court: court
+              });
+            }}
+          />
+        </>
+      ) : (
         <>
           <Text>Please log in first</Text>
         </>
       )}
-      */}
-
-      <>
-        <Input
-          onChangeText={(text) => setOpponent(text)}
-          value={opponent}
-          placeholder="Opponent"
-        />
-        <Input
-          onChangeText={(text) => setCourt(text)}
-          value={court}
-          placeholder="Court"
-        />
-        <Button
-          title='Start game'
-          onPress={() => {
-            navigation.navigate('Game', {
-              opponent: opponent,
-              court: court
-            });
-          }}
-        />
-      </>
-
     </View>
   );
 }

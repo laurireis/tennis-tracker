@@ -35,8 +35,8 @@ function HomeStack({ navigation }) {
         </>
       ) : (
         <>
-          <Button title="Login" onPress={() => navigation.navigate('Login')} />
-          <Button title="Signup" onPress={() => navigation.navigate('Signup')} />
+          <Button buttonStyle={styles.button} title="Login" onPress={() => navigation.navigate('Login')} />
+          <Button buttonStyle={styles.button} title="Signup" onPress={() => navigation.navigate('Signup')} />
         </>
       )}
     </View>
