@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from '@rneui/themed';
 import { auth } from "../components/firebaseConfig";
 import { getDatabase, ref, push } from "firebase/database";
+import { IconButton } from "react-native-paper";
 
 export default function Game({ navigation, route }) {
   const params = route.params;
@@ -53,6 +54,7 @@ export default function Game({ navigation, route }) {
       if (sets.user === 1 && games.user === 5 && points.user === 40) {
         sendToDatabase(true);
         Alert.alert('You won!');
+        navigation.pop();
         navigation.navigate('Games');
       }
       // Finish set (needs a two point difference)
@@ -91,6 +93,7 @@ export default function Game({ navigation, route }) {
       if (sets.opponent === 1 && games.opponent === 5 && points.opponent === 40) {
         sendToDatabase(false);
         Alert.alert('Opponent won!');
+        navigation.pop();
         navigation.navigate('Games', {
           sets: ({ user: sets.user, opponent: sets.opponent + 1 }),
           firstSet: firstSet,
@@ -132,36 +135,69 @@ export default function Game({ navigation, route }) {
     }
   }
 
+  const Row = ({ children }) => (
+    <View style={styles.gameGridRow}>{children}</View>
+  )
 
+  const Col = ({ numRows, children }) => {
+    return (
+      <View style={styles[`${numRows}col`]}>{children}</View>
+    )
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 40 }}>Scoreboard</Text>
-      <Text>Game at {params.court ? <Text>{params.court}</Text> : <Text>a court</Text>}</Text>
-      <View style={{ flexDirection: 'row' }}>
-        <Text>Placeholder </Text>
-        <Text>{currentUser.displayName} </Text>
-        {params.opponent ? <Text>{params.opponent}</Text> : <Text>Opponent</Text>}
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <Text>Points </Text>
-        <Text>{points.user} </Text>
-        <Text>{points.opponent}</Text>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <Text>Games </Text>
-        <Text>{games.user} </Text>
-        <Text>{games.opponent}</Text>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <Text>Sets </Text>
-        <Text>{sets.user} </Text>
-        <Text>{sets.opponent}</Text>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <Button buttonStyle={styles.button} title='Undo' />
-        <Button buttonStyle={styles.button} title='<<' onPress={() => addScore('user')} />
-        <Button buttonStyle={styles.button} title='>>' onPress={() => addScore('opponent')} />
+      <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 30 }}>Scoreboard</Text>
+      <View style={styles.gameGrid}>
+        <Row>
+          <Col numRows={1}>
+            <Text>Game at {params.court ? <Text>{params.court}</Text> : <Text>a court</Text>}</Text>
+          </Col>
+          <Col numRows={1}>
+            <Text>{currentUser.displayName}</Text>
+          </Col>
+          <Col numRows={1}>
+            {params.opponent ? <Text>{params.opponent}</Text> : <Text>Opponent</Text>}
+          </Col>
+        </Row>
+        <Row>
+          <Col numRows={1}>
+            <Text>Points</Text>
+          </Col>
+          <Col numRows={1}>
+            <Text>{points.user}</Text>
+          </Col>
+          <Col numRows={1}>
+            <Text>{points.opponent}</Text>
+          </Col>
+        </Row>
+        <Row>
+          <Col numRows={1}>
+            <Text>Games</Text>
+          </Col>
+          <Col numRows={1}>
+            <Text>{games.user}</Text>
+          </Col>
+          <Col numRows={1}>
+            <Text>{games.opponent}</Text>
+          </Col>
+        </Row>
+        <Row>
+          <Col numRows={1}>
+            <Text>Sets</Text>
+          </Col>
+          <Col numRows={1}>
+            <Text>{sets.user}</Text>
+          </Col>
+          <Col numRows={1}>
+            <Text>{sets.opponent}</Text>
+          </Col>
+        </Row>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <IconButton icon='undo' />
+          <IconButton icon='chevron-left' onPress={() => addScore('user')} />
+          <IconButton icon='chevron-right' onPress={() => addScore('opponent')} />
+        </View>
       </View>
     </View>
   );

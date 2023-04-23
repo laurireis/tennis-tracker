@@ -1,10 +1,11 @@
-import { View, Alert, Text } from "react-native";
 import { useState } from "react";
-import { auth } from "./firebaseConfig";
+import { View, Alert, Text } from "react-native";
+import { Button } from '@rneui/themed';
+import { TextInput } from "react-native-paper";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { styles } from "./styles";
-import { Input, Button } from '@rneui/themed';
 
+import { auth } from "./firebaseConfig";
+import { styles } from "./styles";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
@@ -15,7 +16,8 @@ export default function Login({ navigation }) {
     try {
       let res = await signInWithEmailAndPassword(auth, email, password);
       if (res && res.user) { Alert.alert("Login successful") }
-      navigation.navigate("HomeStack");
+      navigation.popToTop();
+      //navigation.navigate("HomeStack");
     } catch (error) {
       if (error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password') {
         setError('Invalid email or password');
@@ -33,7 +35,8 @@ export default function Login({ navigation }) {
 
       {error && <Text style={styles.error}>{error}</Text>}
 
-      <Input
+      <TextInput
+        style={styles.input}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -41,7 +44,8 @@ export default function Login({ navigation }) {
         autoCapitalize="none"
         placeholderTextColor="#aaa"
       />
-      <Input
+      <TextInput
+        style={styles.input}
         value={password}
         onChangeText={setPassword}
         secureTextEntry

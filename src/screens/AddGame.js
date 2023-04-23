@@ -1,10 +1,12 @@
-import { Text, View, TouchableOpacity } from "react-native";
-import { styles } from "../components/styles";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../components/firebaseConfig';
+import { Text, View } from "react-native";
+import { Button } from '@rneui/themed';
+import { TextInput } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Button, Input } from '@rneui/themed';
+import { onAuthStateChanged } from 'firebase/auth';
+
+import { auth } from '../components/firebaseConfig';
+import { styles } from "../components/styles";
 import Game from "./Game";
 
 const Stack = createStackNavigator();
@@ -16,7 +18,6 @@ function AddGameStack({ navigation }) {
 
   useEffect(() => {
     const subscriber = onAuthStateChanged(auth, (user) => {
-      console.log('user', JSON.stringify(user));
       setUser(user);
     });
     return subscriber;
@@ -26,12 +27,14 @@ function AddGameStack({ navigation }) {
     <View style={styles.container}>
       {user ? (
         <>
-          <Input
+          <TextInput
+            style={styles.input}
             onChangeText={(text) => setOpponent(text)}
             value={opponent}
             placeholder="Opponent"
           />
-          <Input
+          <TextInput
+            style={styles.input}
             onChangeText={(text) => setCourt(text)}
             value={court}
             placeholder="Court"
@@ -49,7 +52,7 @@ function AddGameStack({ navigation }) {
         </>
       ) : (
         <>
-          <Text>Please log in first</Text>
+          <Text style={styles.logIn}>Please log in first</Text>
         </>
       )}
     </View>

@@ -8,9 +8,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   logo: {
-    fontSize: 55,
+    fontSize: 50,
     fontWeight: 'bold',
-    color: '#fa5aca'
+    color: '#fa5aca',
+    fontFamily: 'monospace',
   },
   header: {
     fontSize: 24,
@@ -18,12 +19,12 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
+    width: '90%',
+    padding: 3,
+    marginBottom: 5,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 4,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginBottom: 16,
+    borderRadius: 6,
   },
   error: {
     marginBottom: 20,
@@ -50,12 +51,33 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
   },
   playedGame: {
-    alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: '#ccc',
     borderRadius: 4,
     padding: 8,
     marginVertical: 4,
     width: '100%',
+  },
+  gameGrid: {
+    flex: 0,
+    marginHorizontal: 'auto',
+    width: '90%',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+  },
+  gameGridRow: {
+    flexDirection: 'row',
+  },
+  '1col': {
+    backgroundColor: 'lightgray',
+    flex: 1,
+    margin: 1,
+    padding: 8,
+    borderRadius: 2,
+    alignItems: 'center',
+  },
+  logIn: {
+    fontSize: 20,
+    fontFamily: 'monospace',
   }
 })

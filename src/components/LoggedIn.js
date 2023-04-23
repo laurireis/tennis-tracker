@@ -1,6 +1,7 @@
-import { signOut } from "firebase/auth";
 import { View, Text } from "react-native";
+import { signOut } from "firebase/auth";
 import { Button } from "@rneui/themed";
+
 import { auth } from "./firebaseConfig";
 import { styles } from "./styles";
 

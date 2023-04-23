@@ -1,13 +1,15 @@
-import { FlatList, Text, View } from "react-native";
-import { styles } from "../components/styles";
 import { useEffect, useState } from "react";
+import { FlatList, Text, View } from "react-native";
+import { Button } from "@rneui/base";
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../components/firebaseConfig';
 import { getDatabase, onValue, ref } from "firebase/database";
 import { useIsFocused } from "@react-navigation/native";
-import { Button } from "@rneui/base";
 import { createStackNavigator } from "@react-navigation/stack";
+
+import { auth } from '../components/firebaseConfig';
+import { styles } from "../components/styles";
 import Statistics from "./Statistics";
+import { Card, Title } from "react-native-paper";
 
 const Stack = createStackNavigator();
 
@@ -20,7 +22,6 @@ function GamesStack({ navigation }) {
   useEffect(() => {
     console.log('isFocused', isFocused);
     const subscriber = onAuthStateChanged(auth, (user) => {
-      console.log('user', JSON.stringify(user));
       setUser(user);
     });
     if (isFocused) {
@@ -46,9 +47,9 @@ function GamesStack({ navigation }) {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       {user ? (
-        <View style={styles.container}>
+        <>
           <Button
             buttonStyle={[styles.button, { marginTop: 40, marginBottom: 10 }]}
             title="Statistics"
@@ -57,34 +58,35 @@ function GamesStack({ navigation }) {
             })}
           />
           <FlatList
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
             data={games.reverse()}
             renderItem={({ item }) => (
-              <View style={styles.playedGame}>
-                <Text>{item.date}</Text>
-                <Text>Game at {item.court} against {item.opponent}</Text>
-                <Text>{item.sets.user} - {item.sets.opponent}</Text>
-                <Text>({item.firstSet.user} - {item.firstSet.opponent}), ({item.secondSet.user} - {item.secondSet.opponent}), ({item.thirdSet.user} - {item.thirdSet.opponent})</Text>
-                {item.userWon
-                  ? <Text style={{ color: 'limegreen' }}>You won!</Text>
-                  : <Text style={{ color: 'red' }}>You lost!</Text>
-                }
-              </View>
+              <Card style={styles.playedGame}>
+                <Card.Title title={item.date} />
+                <Card.Content>
+                  <Title>Game at {item.court} against {item.opponent}</Title>
+                  <Text>{item.sets.user} - {item.sets.opponent}</Text>
+                  <Text>({item.firstSet.user} - {item.firstSet.opponent}), ({item.secondSet.user} - {item.secondSet.opponent}), ({item.thirdSet.user} - {item.thirdSet.opponent})</Text>
+                  {item.userWon
+                    ? <Text style={{ color: 'limegreen' }}>You won!</Text>
+                    : <Text style={{ color: 'red' }}>You lost!</Text>
+                  }
+                </Card.Content>
+              </Card>
             )}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={() => (
               <View style={styles.playedGame}>
-                <Text>No games played yet</Text>
+                <Text style={styles.logIn}>No games played yet</Text>
               </View>
             )}
           />
-        </View>
+        </>
       ) : (
-        <View style={styles.container}>
-          <Text>Please log in first</Text>
-        </View>
+        <>
+          <Text style={styles.logIn}>Please log in first</Text>
+        </>
       )}
-    </>
+    </View>
   );
 }
 

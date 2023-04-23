@@ -1,9 +1,11 @@
-import { View, Alert, Text } from "react-native";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
+import { View, Alert, Text } from "react-native";
+import { Button } from '@rneui/themed';
+import { TextInput } from "react-native-paper";
+import { createUserWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+
 import { auth } from "./firebaseConfig";
 import { styles } from "./styles";
-import { Input, Button } from '@rneui/themed';
 
 export default function Signup({ navigation }) {
   const [username, setUsername] = useState('')
@@ -21,6 +23,7 @@ export default function Signup({ navigation }) {
           updateProfile(auth.currentUser, {
             displayName: username
           }).then(() => {
+            signOut(auth);
             navigation.navigate("HomeStack");
           }).catch((e) => {
             console.log(e);
@@ -41,14 +44,16 @@ export default function Signup({ navigation }) {
 
       {error && <Text style={styles.error}>{error}</Text>}
 
-      <Input
+      <TextInput
+        style={styles.input}
         value={username}
         onChangeText={setUsername}
         placeholder="Enter username"
         autoCapitalize="none"
         placeholderTextColor="#aaa"
       />
-      <Input
+      <TextInput
+        style={styles.input}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -56,7 +61,8 @@ export default function Signup({ navigation }) {
         autoCapitalize="none"
         placeholderTextColor="#aaa"
       />
-      <Input
+      <TextInput
+        style={styles.input}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -64,7 +70,8 @@ export default function Signup({ navigation }) {
         autoCapitalize="none"
         placeholderTextColor="#aaa"
       />
-      <Input
+      <TextInput
+        style={styles.input}
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry
