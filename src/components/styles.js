@@ -75,6 +75,7 @@ export const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 2,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   logIn: {
     fontSize: 20,
