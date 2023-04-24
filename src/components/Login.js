@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Alert, Text } from "react-native";
 import { Button } from '@rneui/themed';
-import { TextInput } from "react-native-paper";
+import { TextInput, Snackbar } from "react-native-paper";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "./firebaseConfig";
@@ -11,13 +11,18 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [visible, setVisible] = useState(true);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+  const onDismissSnackBar = () => setVisible(false);
 
   const loginUser = async () => {
     try {
       let res = await signInWithEmailAndPassword(auth, email, password);
-      if (res && res.user) { Alert.alert("Login successful") }
+      if (res && res.user) {
+        onToggleSnackBar();
+      }
       navigation.popToTop();
-      //navigation.navigate("HomeStack");
     } catch (error) {
       if (error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password') {
         setError('Invalid email or password');

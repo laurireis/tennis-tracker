@@ -1,7 +1,6 @@
 import { Text, View, Alert } from "react-native";
 import { styles } from "../components/styles";
 import { useState } from "react";
-import { Button } from '@rneui/themed';
 import { auth } from "../components/firebaseConfig";
 import { getDatabase, ref, push } from "firebase/database";
 import { IconButton } from "react-native-paper";
@@ -16,6 +15,15 @@ export default function Game({ navigation, route }) {
   const [firstSet, setFirstSet] = useState({ user: 0, opponent: 0 });
   const [secondSet, setSecondSet] = useState({ user: 0, opponent: 0 });
   const [thirdSet, setThirdSet] = useState({ user: 0, opponent: 0 });
+
+  const resetScore = () => {
+    setPoints({ user: 0, opponent: 0 });
+    setGames({ user: 0, opponent: 0 });
+    setSets({ user: 0, opponent: 0 });
+    setFirstSet({ user: 0, opponent: 0 });
+    setSecondSet({ user: 0, opponent: 0 });
+    setThirdSet({ user: 0, opponent: 0 });
+  };
 
   function sendToDatabase(bool) {
     const db = getDatabase();
@@ -147,7 +155,7 @@ export default function Game({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 30 }}>Scoreboard</Text>
+      <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 30, color: '#fa5aca' }}>Scoreboard</Text>
       <View style={styles.gameGrid}>
         <Row>
           <Col numRows={1}>
@@ -194,7 +202,7 @@ export default function Game({ navigation, route }) {
           </Col>
         </Row>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <IconButton icon='undo' />
+          <IconButton icon='close-box' iconColor="red" onPress={() => resetScore()} />
           <IconButton icon='chevron-left' onPress={() => addScore('user')} />
           <IconButton icon='chevron-right' onPress={() => addScore('opponent')} />
         </View>

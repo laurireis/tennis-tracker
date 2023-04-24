@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import { Button } from '@rneui/themed';
+import { Snackbar } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from 'firebase/auth';
@@ -16,6 +17,8 @@ const Stack = createStackNavigator();
 function HomeStack({ navigation }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
+  const [visible, setVisible] = useState(true);
+  const onDismissSnackBar = () => setVisible(false);
 
   useEffect(() => {
     const subscriber = onAuthStateChanged(auth, (user) => {
@@ -31,6 +34,13 @@ function HomeStack({ navigation }) {
       {loggedIn ? (
         <>
           <LoggedIn user={user} />
+          <Snackbar
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            duration={3000}
+          >
+            Logged in successfully
+          </Snackbar>
         </>
       ) : (
         <>
