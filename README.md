@@ -42,10 +42,10 @@ npx expo start
 
 ## Käyttöliittymä
 <p float="left">
-<img src="src/img/home.png" width="40%" height="40%" />
-<img src="src/img/game.png" width="40%" height="40%" />
-<img src="src/img/games.png" width="40%" height="40%" />
-<img src="src/img/stats.png" width="40%" height="40%"> /
+<img src="src/img/home.png" width="49%" height="49%" />
+<img src="src/img/game.png" width="49%" height="49%" />
+<img src="src/img/games.png" width="49%" height="49%" />
+<img src="src/img/stats.png" width="49%" height="49%"> /
 </p>
 
 [⬆️ Takaisin ylös](#projektista)
