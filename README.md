@@ -48,6 +48,10 @@ npx expo start
 <img src="src/img/stats.png" width="49%" height="49%" />
 </p>
 
+## Tietoturva
+Sovellusta on hyvä testata Firebasen sääntöjen `read` ja `write` ollessa `true`, mutta jos koodi etenee tuotantoon, on hyvä muokata sääntöjä esimerkiksi seuraavalla tavalla, että ei-kirjautuneet käyttäjät eivät voi lukea tai kirjoittaa dataa, ja kirjautuneet käyttäjät voivat lukea tai kirjoittaa dataa vain omalla käyttäjällään.
+<img src="src/img/firebase.png" />
+
 [⬆️ Takaisin ylös](#projektista)
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
