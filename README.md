@@ -19,11 +19,11 @@ Tärkeitä komponenttikirjastoja ovat olleet esimerkiksi [React Navigation][Reac
   ```sh
   git clone https://github.com/laurireis/tennis-tracker.git
   ```
-1. Asenna tarvittavat paketit
+2. Asenna tarvittavat paketit
   ```sh
   npm install
   ```
-1. Luo projektin juureen `.env` -tiedosto, johon lisäät seuraavat tiedot Firebase Realtime tietokannastasi
+3. Luo projektin juureen `.env` -tiedosto, johon lisäät seuraavat tiedot Firebase Realtime tietokannastasi
 ```
 API_KEY=
 AUTH_DOMAIN=
@@ -34,11 +34,11 @@ MESSAGING_SENDER_ID=
 APP_ID=
 MEASUREMENT_ID=
 ```
-1. Sovelluksen käynnistys
+4. Sovelluksen käynnistys
 ```sh
 npx expo start
 ```
-1. Skannaa terminaaliin tuleva QR-koodi kamerasovelluksella (iOS) tai Expo-sovelluksella (Android)
+5. Skannaa terminaaliin tuleva QR-koodi kamerasovelluksella (iOS) tai Expo-sovelluksella (Android)
 
 ## Käyttöliittymä
 <p float="left">
