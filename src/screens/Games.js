@@ -63,7 +63,7 @@ function GamesStack({ navigation }) {
             data={games.reverse()}
             renderItem={({ item }) => (
               <Card style={styles.playedGame}>
-                <Card.Title title={item.date} />
+                <Card.Title title={item.date} subtitle={item.time} />
                 <Card.Content>
                   <Title>Game at {item.court} against {item.opponent}</Title>
                   <Text>{item.sets.user} - {item.sets.opponent}</Text>

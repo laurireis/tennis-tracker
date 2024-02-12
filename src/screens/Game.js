@@ -49,7 +49,7 @@ export default function Game({ navigation, route }) {
         thirdSet: thirdSet,
         sets: sets,
         date: new Date().toLocaleDateString('fi-FI'),
-        time: new Date().toLocaleTimeString('fi-FI'),
+        time: new Date().toLocaleTimeString('fi-FI', {hour: '2-digit', minute: '2-digit'}),
         userWon: bool
       }
     );
