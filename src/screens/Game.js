@@ -48,8 +48,8 @@ export default function Game({ navigation, route }) {
         secondSet: secondSet,
         thirdSet: thirdSet,
         sets: sets,
-        date: new Date().toLocaleDateString(),
-        time: new Date().toLocaleTimeString(),
+        date: new Date().toLocaleDateString('fi-FI'),
+        time: new Date().toLocaleTimeString('fi-FI'),
         userWon: bool
       }
     );
