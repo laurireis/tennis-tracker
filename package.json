@@ -19,6 +19,7 @@
     "expo-dev-client": "~2.2.1",
     "expo-status-bar": "~1.4.4",
     "firebase": "^9.19.1",
+    "lodash": "^4.17.21",
     "react": "18.2.0",
     "react-native": "0.71.6",
     "react-native-dotenv": "^3.4.8",

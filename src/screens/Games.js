@@ -10,6 +10,7 @@ import { auth } from '../components/firebaseConfig';
 import { styles } from "../components/styles";
 import Statistics from "./Statistics";
 import { Card, Title } from "react-native-paper";
+import _ from "lodash";
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ function GamesStack({ navigation }) {
   const [user, setUser] = useState({});
   const currentUser = auth.currentUser;
   const isFocused = useIsFocused();
+  const thirdSetNotPlayed = { opponent: 0, user: 0 };
 
   useEffect(() => {
     console.log('isFocused', isFocused);
@@ -65,7 +67,12 @@ function GamesStack({ navigation }) {
                 <Card.Content>
                   <Title>Game at {item.court} against {item.opponent}</Title>
                   <Text>{item.sets.user} - {item.sets.opponent}</Text>
-                  <Text>({item.firstSet.user} - {item.firstSet.opponent}), ({item.secondSet.user} - {item.secondSet.opponent}), ({item.thirdSet.user} - {item.thirdSet.opponent})</Text>
+                  <Text>
+                    ({item.firstSet.user} - {item.firstSet.opponent}),
+                    ({item.secondSet.user} - {item.secondSet.opponent})
+                    {_.isEqual(item.thirdSet, thirdSetNotPlayed) ? '' : ', (' +
+                        item.thirdSet.user + ' - ' + item.thirdSet.opponent + ')'}
+                  </Text>
                   {item.userWon
                     ? <Text style={{ color: 'limegreen' }}>You won!</Text>
                     : <Text style={{ color: 'red' }}>You lost!</Text>
